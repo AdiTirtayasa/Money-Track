@@ -11,7 +11,16 @@ class AddCategorySheet extends StatefulWidget {
 
 class _AddCategorySheetState extends State<AddCategorySheet> {
   final _controller = TextEditingController();
-
+ void _handleSaveCategory() {
+  final name = _controller.text.trim();
+  if (name.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Nama kategori wajib diisi')),
+    );
+    return;
+  }
+  Navigator.of(context).pop(name);
+ }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,14 +51,12 @@ class _AddCategorySheetState extends State<AddCategorySheet> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () {
-                if (_controller.text.trim().isEmpty) return;
-                Navigator.pop(context, _controller.text.trim());
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text('Simpan Kategori'),
-              ),
+              onPressed:  _handleSaveCategory,
+              child:
+              const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Text('Simpan Kategori'),
+                    ),
             ),
           ),
         ],

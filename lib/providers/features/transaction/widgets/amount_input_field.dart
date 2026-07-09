@@ -14,39 +14,48 @@ class AmountInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: TextInputType.number,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        _ThousandsFormatter(),
-      ],
-      style: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.bold,
-        color: accentColor,
-      ),
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        prefixText: 'Rp ',
-        prefixStyle: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: accentColor.withValues(alpha:0.6),
+    return Padding(padding:   const EdgeInsets.symmetric(horizontal: 8.0), 
+    child: Row(
+      children: [
+        Text(
+          'Rp',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: accentColor,
+          ),
         ),
-        border: InputBorder.none,
-        hintText: '0',
-      ),
-      validator: (value) {
+        const SizedBox(width: 8),
+        Expanded(
+          child: TextFormField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              _ThousandsFormatter(),
+            ],
+            decoration: InputDecoration(
+              hintText: 'Masukkan jumlah',
+              border: const OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: accentColor, width: 0.5),
+              ),
+            ),
+            validator: (value) {
         final cleaned = (value ?? '').replaceAll('.', '');
         if (cleaned.isEmpty) return 'Jumlah wajib diisi';
         final amount = int.tryParse(cleaned) ?? 0;
         if (amount <= 0) return 'Jumlah harus lebih dari 0';
         return null;
       },
+          ),
+        ),
+      ],
+    )
     );
   }
 }
+
 
 // Formatter otomatis menambahkan titik ribuan saat mengetik, misal 15000 -> 15.000
 class _ThousandsFormatter extends TextInputFormatter {

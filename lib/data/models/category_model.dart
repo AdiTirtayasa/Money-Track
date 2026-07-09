@@ -22,7 +22,7 @@ Map<String, dynamic> toMap() {
     'type': type,
     'icon': icon,
     'color': color,
-    'isDefault': isDefault ? 1 : 0,
+    'is_default': isDefault ? 1 : 0,
   };
 }
 
@@ -33,7 +33,7 @@ factory CategoryModel.fromMap(Map<String, dynamic> map) {
     type: map['type'],
     icon: map['icon'],
     color: map['color'],
-    isDefault: map['isDefault'] == 1,
+    isDefault: map['is_default'] == 1,
   );
 }
 
